@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Overview of the itp package</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Overview of the itp package</h1>
+
+
+
+<p>The Interpolate, Truncate, Project (ITP) root-finding algorithm was developed in <span class="citation">Oliveira and Takahashi (2020)</span>. It’s performance compares favourably with existing methods on both well-behaved functions and ill-behaved functions while retaining the worst-case reliability of the bisection method. For details see the authors’ <a href="https://www.growkudos.com/publications/10.1145%25252F3423597/reader">Kudos summary</a> and the Wikipedia article <a href="https://en.wikipedia.org/wiki/ITP_method">ITP method</a>.</p>
+<p>The <code>itp</code> function implements the ITP method to find a root <span class="math inline">\(x^*\)</span> of the function <span class="math inline">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> in the interval <span class="math inline">\([a, b]\)</span>, where <span class="math inline">\(f(a)f(b) &lt; 0\)</span>. If <span class="math inline">\(f\)</span> is continuous over <span class="math inline">\([a, b]\)</span> then <span class="math inline">\(f(x^*) = 0\)</span>. If <span class="math inline">\(f\)</span> is discontinuous over <span class="math inline">\([a, b]\)</span> then <span class="math inline">\(x^*\)</span> may be an estimate of a point of discontinuity at which the sign of <span class="math inline">\(f\)</span> changes, that is, <span class="math inline">\(f(x^* - \delta)f(x^* + \delta) \leq 0\)</span>, where <span class="math inline">\(0 \leq \delta \leq \epsilon\)</span> for some tolerance value <span class="math inline">\(\epsilon\)</span>.</p>
+<p>We use some of the examples presented in Table 1 of <span class="citation">Oliveira and Takahashi (2020)</span> to illustrate the use of this function and run the examples using the <code>uniroot</code> function in the <code>stats</code> package as a means of comparison, using a convergence tolerance of <span class="math inline">\(10^{-10}\)</span> in both cases. The <code>itp</code> function uses the following default values of the tuning parameters: <span class="math inline">\(\kappa_1 = 0.2 / (b - a)\)</span>, <span class="math inline">\(\kappa_2 = 2\)</span> and <span class="math inline">\(n_0 = 1\)</span>, but these may be changed by the user. See Sections 2 and 3 of <span class="citation">Oliveira and Takahashi (2020)</span> for information. The following function prints output from <code>uniroot</code> in the same style as the output from <code>itp</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to print part of uniroot output</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>print.list <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="fu">max</span>(3L, <span class="fu">getOption</span>(<span class="st">&quot;digits&quot;</span>) <span class="sc">-</span> 3L)) {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;root&quot;</span>, <span class="st">&quot;f(root)&quot;</span>, <span class="st">&quot;iterations&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.default</span>(<span class="fu">format</span>(x[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">digits =</span> digits), <span class="at">print.gap =</span> 2L, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(itp)</span></code></pre></div>
+<div id="well-behaved-functions" class="section level2">
+<h2>Well-behaved functions</h2>
+<p>These functions are infinitely differentiable and contain only one simple root over <span class="math inline">\([−1, 1]\)</span>.</p>
+<div id="lambert-fx-x-ex---1" class="section level3">
+<h3>Lambert: <span class="math inline">\(f(x) = x e^x - 1\)</span></h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lambert</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lambert <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x <span class="sc">*</span> <span class="fu">exp</span>(x) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(lambert, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(lambert, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671  -8.623e-12           8</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+<div id="trigonometric-1-fx-tanx---1-10" class="section level3">
+<h3>Trigonometric 1: <span class="math inline">\(f(x) = \tan(x - 1 / 10)\)</span></h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trigonometric 1</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>trig1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">tan</span>(x <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(trig1, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.1  -8.238e-14           8</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(trig1, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.1   6.212e-14           8</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="ill-behaved-functions" class="section level2">
+<h2>Ill-behaved functions</h2>
+<div id="polynomial-3-fx-106-x---1-3" class="section level3">
+<h3>Polynomial 3: <span class="math inline">\(f(x) = (10^6 x - 1) ^ 3\)</span></h3>
+<p>This function has a non-simple root at <span class="math inline">\(10^{-6}\)</span>, with a multiplicity of 3.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polynomial 3</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>poly3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">*</span> <span class="fl">1e6</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">3</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1e-06   -1.25e-13          36</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Using n0 = 0 leads to (slightly) fewer iterations, in this example</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>poly3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">*</span> <span class="fl">1e6</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">3</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">n0 =</span> <span class="dv">0</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1e-06  -6.739e-14          35</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1e-06   1.771e-17          65</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+<div id="discontinuous" class="section level3">
+<h3>Discontinuous</h3>
+</div>
+<div id="staircase-fx-lceil-10-x---1-rceil-12" class="section level3">
+<h3>Staircase: <span class="math inline">\(f(x) = \lceil 10 x - 1 \rceil + 1/2\)</span></h3>
+<p>This function has discontinuities, including one at the location of the root.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Staircase</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>staircase <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ceiling</span>(<span class="dv">10</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(staircase, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7.404e-11         0.5          31</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(staircase, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -3.739e-11        -0.5          31</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+</div>
+<div id="multiple-roots" class="section level3">
+<h3>Multiple roots</h3>
+</div>
+<div id="warsaw-fx-ix--1left1-sinleftfrac11xrightright-1" class="section level3">
+<h3>Warsaw: <span class="math inline">\(f(x) = I(x &gt; -1)\left(1 + \sin\left(\frac{1}{1+x}\right)\right)-1\)</span></h3>
+<p>This function has multiple roots, but we only seek one of them.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Warsaw</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>warsaw <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">1</span>, <span class="fu">sin</span>(<span class="dv">1</span> <span class="sc">/</span> (x <span class="sc">+</span> <span class="dv">1</span>)), <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -0.6817  -5.472e-11          11</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -0.6817  -3.216e-16           9</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p>In terms of a naive comparison based on the number of iterations <code>itp</code> and <code>uniroot</code> perform similarly, except in the repeated-root “Polynomial 3” example, where <code>itp</code> requires fewer iterations.</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({  "HTML-CSS": { minScaleAdjust: 125, availableFonts: [] }  });
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-OliveiraTakahashi2021" class="csl-entry">
+Oliveira, I. F. D., and R. H. C. Takahashi. 2020. <span>“An Enhancement of the Bisection Method Average Performance Preserving Minmax Optimality.”</span> <em>ACM Trans. Math. Softw.</em> 47 (1). New York, NY, USA: Association for Computing Machinery. doi:<a href="https://doi.org/10.1145/3423597">10.1145/3423597</a>.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
