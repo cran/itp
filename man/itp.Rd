@@ -126,6 +126,17 @@ itp(lambert, c(-1, 1))
 trig1 <- function(x) tan(x - 1 /10)
 itp(trig1, c(-1, 1))
 
+# Logarithmic
+logarithmic <- function(x) log(abs(x - 10 / 9))
+itp(logarithmic, c(-1, 1))
+
+# Linear
+linear <- function(x) x
+# Solution in one iteration
+itp(linear, c(-1, 1))
+# Solution at an input endpoint
+itp(linear, c(-1, 0))
+
 ### Ill-behaved functions
 
 ## Non-simple zero
@@ -148,13 +159,6 @@ itp(staircase, c(-1, 1))
 # Warsaw
 warsaw <- function(x) ifelse(x > -1, sin(1 / (x + 1)), -1)
 itp(warsaw, c(-1, 1))
-
-# Linear
-linear <- function(x) x
-# Solution in one iteration
-itp(linear, c(-1, 1))
-# Solution at an input endpoint
-itp(linear, c(-1, 0))
 }
 \references{
 Oliveira, I. F. D. and Takahashi, R. H. C. (2021). An Enhancement

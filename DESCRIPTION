@@ -1,8 +1,8 @@
 Package: itp
 Type: Package
 Title: The Interpolate, Truncate, Project (ITP) Root-Finding Algorithm
-Version: 1.0.0
-Date: 2022-06-06
+Version: 1.0.1
+Date: 2022-06-14
 Authors@R: person(c("Paul", "J."), "Northrop", email = "p.northrop@ucl.ac.uk",
   role = c("aut", "cre", "cph"))
 Description: Implements the Interpolate, Truncate, Project (ITP) root-finding 
@@ -25,8 +25,8 @@ URL: https://paulnorthrop.github.io/itp/,
 BugReports: https://github.com/paulnorthrop/itp/issues
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2022-06-06 12:29:25 UTC; paul
+Packaged: 2022-06-14 18:57:48 UTC; paul
 Author: Paul J. Northrop [aut, cre, cph]
 Maintainer: Paul J. Northrop <p.northrop@ucl.ac.uk>
 Repository: CRAN
-Date/Publication: 2022-06-07 08:30:12 UTC
+Date/Publication: 2022-06-14 19:20:02 UTC
