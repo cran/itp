@@ -19,13 +19,18 @@ itp(
 )
 }
 \arguments{
-\item{f}{The function for which the root is sought.}
+\item{f}{An R function or an external pointer to a C++ function.  For the
+latter see the article
+\href{https://gallery.rcpp.org/articles/passing-cpp-function-pointers/}{
+Passing user-supplied C++ functions} in the
+\href{https://gallery.rcpp.org/}{Rcpp Gallery}. The function for which the
+root is sought.}
 
 \item{interval}{A numeric vector \code{c(a, b)} of length 2
 containing the end points of the interval to be searched for the root.
 The function values at the end points must be of opposite signs.}
 
-\item{...}{additional named or unnamed arguments to be pass to \code{f}.}
+\item{...}{Additional arguments to be passed to \code{f}.}
 
 \item{a, b}{An alternative way to set the lower and upper end points of the
 interval to be searched. The function values at these end points must be
@@ -59,14 +64,24 @@ An object (a list) of class \code{"itp"} containing the following
     convergence.}
   \item{estim.prec}{an approximate estimated precision for \code{root},
     equal to the half the width of the final bracket for the root.}
-
   If the root occurs at one of the input endpoints \code{a} or \code{b} then
   \code{iter = 0} and \code{estim.prec = NA}.
+
+  The return object also has the attributes \code{f} (the input R function
+  or pointer to a C++ function \code{f}), \code{f_args} (a list of
+  additional arguments to \code{f} provided in \code{...}), \code{f_name}
+  (a function name extracted from \code{as.character(substitute(f))} or the
+  form of the R function if \code{f} was not named), \code{used_c} (a
+  logical scalar: \code{FALSE}, if \code{f} is an R function and \code{TRUE}
+  if \code{f} is a pointer to a C++ function) and \code{input_a} and
+  \code{input_b} (the input values of \code{a} and \code{b}).  These
+  attributes are used in \code{\link{plot.itp}} to produce a plot of the
+  function \code{f} over the interval \code{(input_a, input_b)}.
 }
 \description{
 Performs one-dimensional root-finding using the ITP algorithm of
 Oliveira and Takahashi (2021).  The function \code{itp} searches an
-interval [\eqn{a}, \eqn{b}] for a root (i.e. a zero) of the
+interval [\eqn{a}, \eqn{b}] for a root (i.e., a zero) of the
 function \code{f} with respect to its first argument. Each iteration
 results in a bracketing interval for the root that is narrower than the
 previous interval.  If the function is discontinuous then a point of
@@ -109,10 +124,17 @@ Page 8 of Oliveira and Takahashi (2021) describes the ITP
 \examples{
 #### ----- The example used in the Wikipedia entry for the ITP method
 
+# Supplying an R function
 wiki <- function(x) x ^ 3 - x - 2
 itp(wiki, c(1, 2), epsilon = 0.0005, k1 = 0.1, n0 = 1)
 # The default setting (with k1 = 0.2) wins by 1 iteration
-itp(wiki, c(1, 2), epsilon = 0.0005, n0 = 1)
+x <- itp(wiki, c(1, 2), epsilon = 0.0005, n0 = 1)
+plot(x)
+
+# Supplying an external pointer to a C++ function
+wiki_ptr <- xptr_create("wiki")
+itp(f = wiki_ptr, c(1, 2), epsilon = 0.0005, k1 = 0.1)
+plot(x)
 
 #### ----- Some examples from Table 1 of Oliveira and Takahashi (2021)
 
@@ -123,12 +145,16 @@ lambert <- function(x) x * exp(x) - 1
 itp(lambert, c(-1, 1))
 
 # Trigonometric 1
-trig1 <- function(x) tan(x - 1 /10)
-itp(trig1, c(-1, 1))
+# Supplying an R function
+trig1 <- function(x, root) tan(x - root)
+itp(trig1, c(-1, 1), root = 1 / 10)
+# Supplying an external pointer to a C++ function
+trig1_ptr <- xptr_create("trig1")
+itp(f = trig1_ptr, c(-1, 1), root = 1 / 10)
 
 # Logarithmic
-logarithmic <- function(x) log(abs(x - 10 / 9))
-itp(logarithmic, c(-1, 1))
+logarithmic <- function(x, shift) log(abs(x - shift))
+itp(logarithmic, c(-1, 1), shift = 10 /9)
 
 # Linear
 linear <- function(x) x
@@ -158,7 +184,10 @@ itp(staircase, c(-1, 1))
 
 # Warsaw
 warsaw <- function(x) ifelse(x > -1, sin(1 / (x + 1)), -1)
+# Function increasing over the interval
 itp(warsaw, c(-1, 1))
+# Function decreasing over the interval
+itp(warsaw, c(-0.85, -0.8))
 }
 \references{
 Oliveira, I. F. D. and Takahashi, R. H. C. (2021). An Enhancement
@@ -167,6 +196,6 @@ Oliveira, I. F. D. and Takahashi, R. H. C. (2021). An Enhancement
   \doi{10.1145/3423597}
 }
 \seealso{
-\code{\link{print.itp}} to print objects of class \code{"itp"}
-  returned from \code{\link{itp}}.
+\code{\link{print.itp}} and \code{\link{plot.itp}} for print and
+  plot methods for objects of class \code{"itp"} returned from \code{itp}.
 }
