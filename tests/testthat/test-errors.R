@@ -1,4 +1,9 @@
-# Check that errors are triggered
+# Check that errors are triggered in itp()
+
+# f not finite at both end points
+test_that("f(a) or f(b) not finite", {
+  testthat::expect_error(itp(f = log, c(0, 1)))
+})
 
 # Lambert
 lambert <- function(x) x * exp(x) - 1

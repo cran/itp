@@ -2,7 +2,7 @@
 % Please edit documentation in R/itp.R
 \name{itp}
 \alias{itp}
-\title{The Interpolate, Truncate, Project (ITP) root-finding algorithm}
+\title{The ITP root-finding algorithm}
 \usage{
 itp(
   f,
@@ -40,12 +40,9 @@ of opposite signs.}
 
 \item{epsilon}{A positive numeric scalar. The desired accuracy of the root.
 The algorithm continues until the width of the bracketing interval for the
-root is less than or equal to \code{2 * epsilon}. The value of
-\code{epsilon} should be greater than
-\ifelse{html}{2\out{<sup>-63</sup>}\code{(b-a)}}{\eqn{2^{-63}}(\code{b-a})}
-to avoid integer overflow.}
+root is less than or equal to \code{2 * epsilon}.}
 
-\item{k1, k2, n0}{the values of the tuning parameters
+\item{k1, k2, n0}{Numeric scalars. The values of the tuning parameters
 \ifelse{html}{\eqn{\kappa}\out{<sub>1</sub>}}{\eqn{\kappa_1}},
 \ifelse{html}{\eqn{\kappa}\out{<sub>2</sub>}}{\eqn{\kappa_2}},
 \ifelse{html}{\eqn{n}\out{<sub>0</sub>}}{\eqn{n_0}}.
@@ -64,10 +61,10 @@ An object (a list) of class \code{"itp"} containing the following
     convergence.}
   \item{estim.prec}{an approximate estimated precision for \code{root},
     equal to the half the width of the final bracket for the root.}
-  If the root occurs at one of the input endpoints \code{a} or \code{b} then
-  \code{iter = 0} and \code{estim.prec = NA}.
+    the root occurs at one of the input endpoints \code{a} or \code{b} then
+    \code{iter = 0} and \code{estim.prec = NA}.
 
-  The return object also has the attributes \code{f} (the input R function
+  The returned object also has the attributes \code{f} (the input R function
   or pointer to a C++ function \code{f}), \code{f_args} (a list of
   additional arguments to \code{f} provided in \code{...}), \code{f_name}
   (a function name extracted from \code{as.character(substitute(f))} or the
@@ -118,7 +115,7 @@ Page 8 of Oliveira and Takahashi (2021) describes the ITP
   the \code{itp} function, may result in a smaller number of iterations.
 
   The default values of the other tuning parameters
-  (\code{epsilon = 1e-10, k1 = 0.1, k2 = 2 / (b - a)}) are set based on
+  (\code{epsilon = 1e-10, k1 = 0.2 / (b - a), k2 = 2}) are set based on
   arguments made in Oliveira and Takahashi (2021).
 }
 \examples{
@@ -128,13 +125,15 @@ Page 8 of Oliveira and Takahashi (2021) describes the ITP
 wiki <- function(x) x ^ 3 - x - 2
 itp(wiki, c(1, 2), epsilon = 0.0005, k1 = 0.1, n0 = 1)
 # The default setting (with k1 = 0.2) wins by 1 iteration
-x <- itp(wiki, c(1, 2), epsilon = 0.0005, n0 = 1)
-plot(x)
+wres <- itp(wiki, c(1, 2), epsilon = 0.0005, n0 = 1)
+wres
+plot(wres)
 
 # Supplying an external pointer to a C++ function
 wiki_ptr <- xptr_create("wiki")
-itp(f = wiki_ptr, c(1, 2), epsilon = 0.0005, k1 = 0.1)
-plot(x)
+wres_c <- itp(f = wiki_ptr, c(1, 2), epsilon = 0.0005, k1 = 0.1)
+wres_c
+plot(wres_c)
 
 #### ----- Some examples from Table 1 of Oliveira and Takahashi (2021)
 

@@ -97,6 +97,11 @@ lambert_ptr <- xptr_create("lambert")
 res <- itp(lambert_ptr, c(-1, 1))
 res
 
+## ----lambert_root_itp_c-------------------------------------------------------
+# Calling itp_c()
+res <- itp_c(lambert_ptr, pars = list(), a = -1, b = 1)
+res
+
 ## ----plot_itp, fig.show='hold'------------------------------------------------
 oldpar <- par(mar = c(4, 4, 1, 1))
 plot(res, main = "Lambert")

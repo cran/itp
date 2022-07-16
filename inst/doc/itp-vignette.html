@@ -12,7 +12,7 @@
 
 <meta name="author" content="Paul Northrop" />
 
-<meta name="date" content="2022-07-02" />
+<meta name="date" content="2022-07-16" />
 
 <title>Overview of the itp package</title>
 
@@ -164,13 +164,14 @@ div.csl-indent {
 
 <h1 class="title toc-ignore">Overview of the itp package</h1>
 <h4 class="author">Paul Northrop</h4>
-<h4 class="date">2022-07-02</h4>
+<h4 class="date">2022-07-16</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#supplying-an-r-function">Supplying an R function</a></li>
-<li><a href="#supplying-an-external-pointer-to-a-c-function">Supplying an external pointer to a C++ function</a></li>
+<li><a href="#supplying-to-itp-an-r-function">Supplying to <code>itp</code> an R function</a></li>
+<li><a href="#supplying-to-itp-an-external-pointer-to-a-c-function">Supplying to <code>itp</code> an external pointer to a C++ function</a></li>
+<li><a href="#c-function-itp_c">C++ function <code>itp_c</code></a></li>
 <li><a href="#plot-method">Plot method</a></li>
 <li><a href="#references">References</a></li>
 </ul>
@@ -186,8 +187,8 @@ div.csl-indent {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(itp)</span></code></pre></div>
 <p>First, we consider supplying the argument <code>f</code> to <code>itp</code> using an R function. Then we show how to supply an external pointer to a C++ function. For the simple examples given in the <code>itp</code> package only a modest improvement in speed is observed (and expected). However, being able to call <code>itp()</code> on the C++ side may have benefits in more challenging problems.</p>
-<div id="supplying-an-r-function" class="section level2">
-<h2>Supplying an R function</h2>
+<div id="supplying-to-itp-an-r-function" class="section level2">
+<h2>Supplying to <code>itp</code> an R function</h2>
 <div id="well-behaved-functions" class="section level3">
 <h3>Well-behaved functions</h3>
 <p>These functions are infinitely differentiable and contain only one simple root over <span class="math inline">\([−1, 1]\)</span>.</p>
@@ -281,8 +282,8 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<div id="supplying-an-external-pointer-to-a-c-function" class="section level2">
-<h2>Supplying an external pointer to a C++ function</h2>
+<div id="supplying-to-itp-an-external-pointer-to-a-c-function" class="section level2">
+<h2>Supplying to <code>itp</code> an external pointer to a C++ function</h2>
 <p>The general approach follows the article <a href="https://gallery.rcpp.org/articles/passing-cpp-function-pointers/">Passing user-supplied C++ functions</a> in the <a href="https://gallery.rcpp.org/">Rcpp Gallery</a>. The user writes a C++ function to calculate <span class="math inline">\(f\)</span>. This function must have a particular structure. As an example consider the following function, which implements the Lambert function considered above.</p>
 <pre><code>double lambert_cpp(const double&amp; x, const List&amp; pars) {
   return x * exp(x) - 1.0 ;
@@ -329,12 +330,22 @@ SEXP xptr_create(std::string fstr) {
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span></code></pre></div>
 </div>
 </div>
+<div id="c-function-itp_c" class="section level2">
+<h2>C++ function <code>itp_c</code></h2>
+<p>Also provided is the function <code>itp_c</code>, which is equivalent to <code>itp</code>, but the calculations are performed entirely using C++, and the arguments differ slightly: <code>itp_c</code> has a named required argument <code>pars</code> rather than <code>...</code> and it does not have the arguments <code>interval</code>, <code>f.a</code> or <code>f.b</code>. This may be useful if you wish to call an ITP function on the C++ side.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calling itp_c()</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">itp_c</span>(lambert_ptr, <span class="at">pars =</span> <span class="fu">list</span>(), <span class="at">a =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">b =</span> <span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>res</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function:  </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span></code></pre></div>
+</div>
 <div id="plot-method" class="section level2">
 <h2>Plot method</h2>
 <p>Objects of class <code>itp</code> have a plot method that, by default, produces a plot of the function over the interval over which the root was sought and indicates the location of the root using dashed lines.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">main =</span> <span class="st">&quot;Lambert&quot;</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">main =</span> <span class="st">&quot;Lambert&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 </div>
 <div id="references" class="section level2">

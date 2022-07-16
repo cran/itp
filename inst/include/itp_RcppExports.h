@@ -66,6 +66,27 @@ namespace itp {
         return Rcpp::as<double >(rcpp_result_gen);
     }
 
+    inline List itp_c(const SEXP& f, const List& pars, const double& a, const double& b, const double& epsilon = 1e-10, const double& k1 = -1.0, const double& k2 = 2.0, const double& n0 = 1.0) {
+        typedef SEXP(*Ptr_itp_c)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_itp_c p_itp_c = NULL;
+        if (p_itp_c == NULL) {
+            validateSignature("List(*itp_c)(const SEXP&,const List&,const double&,const double&,const double&,const double&,const double&,const double&)");
+            p_itp_c = (Ptr_itp_c)R_GetCCallable("itp", "_itp_itp_c");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_itp_c(Shield<SEXP>(Rcpp::wrap(f)), Shield<SEXP>(Rcpp::wrap(pars)), Shield<SEXP>(Rcpp::wrap(a)), Shield<SEXP>(Rcpp::wrap(b)), Shield<SEXP>(Rcpp::wrap(epsilon)), Shield<SEXP>(Rcpp::wrap(k1)), Shield<SEXP>(Rcpp::wrap(k2)), Shield<SEXP>(Rcpp::wrap(n0)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<List >(rcpp_result_gen);
+    }
+
     inline double wiki_cpp(const double& x, const List& pars) {
         typedef SEXP(*Ptr_wiki_cpp)(SEXP,SEXP);
         static Ptr_wiki_cpp p_wiki_cpp = NULL;
@@ -203,6 +224,27 @@ namespace itp {
         {
             RNGScope RCPP_rngScope_gen;
             rcpp_result_gen = p_staircase_cpp(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(pars)));
+        }
+        if (rcpp_result_gen.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
+            throw Rcpp::LongjumpException(rcpp_result_gen);
+        if (rcpp_result_gen.inherits("try-error"))
+            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
+        return Rcpp::as<double >(rcpp_result_gen);
+    }
+
+    inline double log_cpp(const double& x, const List& pars) {
+        typedef SEXP(*Ptr_log_cpp)(SEXP,SEXP);
+        static Ptr_log_cpp p_log_cpp = NULL;
+        if (p_log_cpp == NULL) {
+            validateSignature("double(*log_cpp)(const double&,const List&)");
+            p_log_cpp = (Ptr_log_cpp)R_GetCCallable("itp", "_itp_log_cpp");
+        }
+        RObject rcpp_result_gen;
+        {
+            RNGScope RCPP_rngScope_gen;
+            rcpp_result_gen = p_log_cpp(Shield<SEXP>(Rcpp::wrap(x)), Shield<SEXP>(Rcpp::wrap(pars)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

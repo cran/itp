@@ -1,3 +1,9 @@
+# itp 1.2.0
+
+## New features
+
+* The function `itp_c`, which implements the ITP algorithm entirely in C++.
+
 # itp 1.1.0
 
 ## New features
