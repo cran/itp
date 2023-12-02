@@ -12,30 +12,42 @@
 
 <meta name="author" content="Paul Northrop" />
 
-<meta name="date" content="2022-07-16" />
+<meta name="date" content="2023-12-02" />
 
 <title>Overview of the itp package</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -53,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -110,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -128,29 +146,209 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <style type="text/css">
-/* for pandoc --citeproc since 2.11 */
+
 div.csl-bib-body { }
 div.csl-entry {
-  clear: both;
+clear: both;
 }
 .hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+margin-left:2em;
+text-indent:-2em;
 }
 div.csl-left-margin {
-  min-width:2em;
-  float:left;
+min-width:2em;
+float:left;
 }
 div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
+margin-left:2em;
+padding-left:1em;
 }
 div.csl-indent {
-  margin-left: 2em;
+margin-left: 2em;
 }
 </style>
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -164,132 +362,182 @@ div.csl-indent {
 
 <h1 class="title toc-ignore">Overview of the itp package</h1>
 <h4 class="author">Paul Northrop</h4>
-<h4 class="date">2022-07-16</h4>
+<h4 class="date">2023-12-02</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#supplying-to-itp-an-r-function">Supplying to <code>itp</code> an R function</a></li>
-<li><a href="#supplying-to-itp-an-external-pointer-to-a-c-function">Supplying to <code>itp</code> an external pointer to a C++ function</a></li>
-<li><a href="#c-function-itp_c">C++ function <code>itp_c</code></a></li>
-<li><a href="#plot-method">Plot method</a></li>
-<li><a href="#references">References</a></li>
+<li><a href="#supplying-to-itp-an-r-function" id="toc-supplying-to-itp-an-r-function">Supplying to <code>itp</code> an
+R function</a></li>
+<li><a href="#supplying-to-itp-an-external-pointer-to-a-c-function" id="toc-supplying-to-itp-an-external-pointer-to-a-c-function">Supplying
+to <code>itp</code> an external pointer to a C++ function</a></li>
+<li><a href="#c-function-itp_c" id="toc-c-function-itp_c">C++ function
+<code>itp_c</code></a></li>
+<li><a href="#plot-method" id="toc-plot-method">Plot method</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </div>
 
-<p>The Interpolate, Truncate, Project (ITP) root-finding algorithm was developed in <span class="citation">Oliveira and Takahashi (2020)</span>. It’s performance compares favourably with existing methods on both well-behaved functions and ill-behaved functions while retaining the worst-case reliability of the bisection method. For details see the authors’ <a href="https://www.growkudos.com/publications/10.1145%25252F3423597/reader">Kudos summary</a> and the Wikipedia article <a href="https://en.wikipedia.org/wiki/ITP_method">ITP method</a>.</p>
-<p>The <code>itp</code> function implements the ITP method to find a root <span class="math inline">\(x^*\)</span> of the function <span class="math inline">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> in the interval <span class="math inline">\([a, b]\)</span>, where <span class="math inline">\(f(a)f(b) &lt; 0\)</span>. If <span class="math inline">\(f\)</span> is continuous over <span class="math inline">\([a, b]\)</span> then <span class="math inline">\(f(x^*) = 0\)</span>. If <span class="math inline">\(f\)</span> is discontinuous over <span class="math inline">\([a, b]\)</span> then <span class="math inline">\(x^*\)</span> may be an estimate of a point of discontinuity at which the sign of <span class="math inline">\(f\)</span> changes, that is, <span class="math inline">\(f(x^* - \delta)f(x^* + \delta) \leq 0\)</span>, where <span class="math inline">\(0 \leq \delta \leq \epsilon\)</span> for some tolerance value <span class="math inline">\(\epsilon\)</span>.</p>
-<p>We use some of the examples presented in Table 1 of <span class="citation">Oliveira and Takahashi (2020)</span> to illustrate the use of this function and run the examples using the <code>uniroot</code> function in the <code>stats</code> package as a means of comparison, using a convergence tolerance of <span class="math inline">\(10^{-10}\)</span> in both cases. The <code>itp</code> function uses the following default values of the tuning parameters: <span class="math inline">\(\kappa_1 = 0.2 / (b - a)\)</span>, <span class="math inline">\(\kappa_2 = 2\)</span> and <span class="math inline">\(n_0 = 1\)</span>, but these may be changed by the user. See Sections 2 and 3 of <span class="citation">Oliveira and Takahashi (2020)</span> for information. The following function prints output from <code>uniroot</code> in the same style as the output from <code>itp</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method to print part of uniroot output</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>print.list <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="fu">max</span>(3L, <span class="fu">getOption</span>(<span class="st">&quot;digits&quot;</span>) <span class="sc">-</span> 3L)) {</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;root&quot;</span>, <span class="st">&quot;f(root)&quot;</span>, <span class="st">&quot;iterations&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.default</span>(<span class="fu">format</span>(x[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">digits =</span> digits), <span class="at">print.gap =</span> 2L, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(itp)</span></code></pre></div>
-<p>First, we consider supplying the argument <code>f</code> to <code>itp</code> using an R function. Then we show how to supply an external pointer to a C++ function. For the simple examples given in the <code>itp</code> package only a modest improvement in speed is observed (and expected). However, being able to call <code>itp()</code> on the C++ side may have benefits in more challenging problems.</p>
+<p>The Interpolate, Truncate, Project (ITP) root-finding algorithm was
+developed in <span class="citation">Oliveira and Takahashi
+(2020)</span>. It’s performance compares favourably with existing
+methods on both well-behaved functions and ill-behaved functions while
+retaining the worst-case reliability of the bisection method. For
+details see the authors’ <a href="https://www.growkudos.com/publications/10.1145%25252F3423597/reader">Kudos
+summary</a> and the Wikipedia article <a href="https://en.wikipedia.org/wiki/ITP_method">ITP method</a>.</p>
+<p>The <code>itp</code> function implements the ITP method to find a
+root <span class="math inline">\(x^*\)</span> of the function <span class="math inline">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> in
+the interval <span class="math inline">\([a, b]\)</span>, where <span class="math inline">\(f(a)f(b) &lt; 0\)</span>. If <span class="math inline">\(f\)</span> is continuous over <span class="math inline">\([a, b]\)</span> then <span class="math inline">\(f(x^*) = 0\)</span>. If <span class="math inline">\(f\)</span> is discontinuous over <span class="math inline">\([a, b]\)</span> then <span class="math inline">\(x^*\)</span> may be an estimate of a point of
+discontinuity at which the sign of <span class="math inline">\(f\)</span> changes, that is, <span class="math inline">\(f(x^* - \delta)f(x^* + \delta) \leq 0\)</span>,
+where <span class="math inline">\(0 \leq \delta \leq \epsilon\)</span>
+for some tolerance value <span class="math inline">\(\epsilon\)</span>.</p>
+<p>We use some of the examples presented in Table 1 of <span class="citation">Oliveira and Takahashi (2020)</span> to illustrate the
+use of this function and run the examples using the <code>uniroot</code>
+function in the <code>stats</code> package as a means of comparison,
+using a convergence tolerance of <span class="math inline">\(10^{-10}\)</span> in both cases. The
+<code>itp</code> function uses the following default values of the
+tuning parameters: <span class="math inline">\(\kappa_1 = 0.2 / (b -
+a)\)</span>, <span class="math inline">\(\kappa_2 = 2\)</span> and <span class="math inline">\(n_0 = 1\)</span>, but these may be changed by the
+user. See Sections 2 and 3 of <span class="citation">Oliveira and
+Takahashi (2020)</span> for information. The following function prints
+output from <code>uniroot</code> in the same style as the output from
+<code>itp</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Method to print part of uniroot output</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>print.list <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">digits =</span> <span class="fu">max</span>(3L, <span class="fu">getOption</span>(<span class="st">&quot;digits&quot;</span>) <span class="sc">-</span> 3L)) {</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="fu">names</span>(x)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;root&quot;</span>, <span class="st">&quot;f(root)&quot;</span>, <span class="st">&quot;iterations&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="fu">print.default</span>(<span class="fu">format</span>(x[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">digits =</span> digits), <span class="at">print.gap =</span> 2L, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(itp)</span></code></pre></div>
+<p>First, we consider supplying the argument <code>f</code> to
+<code>itp</code> using an R function. Then we show how to supply an
+external pointer to a C++ function. For the simple examples given in the
+<code>itp</code> package only a modest improvement in speed is observed
+(and expected). However, being able to call <code>itp()</code> on the
+C++ side may have benefits in more challenging problems.</p>
 <div id="supplying-to-itp-an-r-function" class="section level2">
 <h2>Supplying to <code>itp</code> an R function</h2>
 <div id="well-behaved-functions" class="section level3">
 <h3>Well-behaved functions</h3>
-<p>These functions are infinitely differentiable and contain only one simple root over <span class="math inline">\([−1, 1]\)</span>.</p>
+<p>These functions are infinitely differentiable and contain only one
+simple root over <span class="math inline">\([−1, 1]\)</span>.</p>
 <div id="lambert-fx-x-ex---1" class="section level4">
 <h4>Lambert: <span class="math inline">\(f(x) = x e^x - 1\)</span></h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lambert</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lambert <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x <span class="sc">*</span> <span class="fu">exp</span>(x) <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(lambert, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: lambert </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(lambert, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671  -8.623e-12           8</span></span></code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Lambert</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>lambert <span class="ot">&lt;-</span> <span class="cf">function</span>(x) x <span class="sc">*</span> <span class="fu">exp</span>(x) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">itp</span>(lambert, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; function: lambert </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">uniroot</span>(lambert, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;     0.5671  -8.623e-12           8</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 </div>
 <div id="trigonometric-1-fx-tanx---1-10" class="section level4">
-<h4>Trigonometric 1: <span class="math inline">\(f(x) = \tan(x - 1 / 10)\)</span></h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trigonometric 1</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>trig1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">tan</span>(x <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span><span class="dv">10</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(trig1, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: trig1 </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.1  -8.238e-14           8</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(trig1, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        0.1   6.212e-14           8</span></span></code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<h4>Trigonometric 1: <span class="math inline">\(f(x) = \tan(x - 1 /
+10)\)</span></h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Trigonometric 1</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>trig1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">tan</span>(x <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">itp</span>(trig1, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; function: trig1 </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;        0.1  -8.238e-14           8</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="fu">uniroot</span>(trig1, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;        0.1   6.212e-14           8</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="ill-behaved-functions" class="section level3">
 <h3>Ill-behaved functions</h3>
 <div id="polynomial-3-non-simple-root-fx-106-x---1-3" class="section level4">
-<h4>Polynomial 3 (non-simple root): <span class="math inline">\(f(x) = (10^6 x - 1) ^ 3\)</span></h4>
+<h4>Polynomial 3 (non-simple root): <span class="math inline">\(f(x) =
+(10^6 x - 1) ^ 3\)</span></h4>
 <p>This function has a non-simple root at <span class="math inline">\(10^{-6}\)</span>, with a multiplicity of 3.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polynomial 3</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>poly3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">*</span> <span class="fl">1e6</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">3</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: poly3 </span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1e-06   -1.25e-13          36</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Using n0 = 0 leads to (slightly) fewer iterations, in this example</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>poly3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">*</span> <span class="fl">1e6</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">3</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">n0 =</span> <span class="dv">0</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: poly3 </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1e-06  -6.739e-14          35</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1e-06   1.771e-17          65</span></span></code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Polynomial 3</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>poly3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">*</span> <span class="fl">1e6</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">3</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">itp</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; function: poly3 </span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;      1e-06   -1.25e-13          36</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># Using n0 = 0 leads to (slightly) fewer iterations, in this example</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>poly3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) (x <span class="sc">*</span> <span class="fl">1e6</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">3</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">itp</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">n0 =</span> <span class="dv">0</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; function: poly3 </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt;      1e-06  -6.739e-14          35</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="fu">uniroot</span>(poly3, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;      1e-06   1.771e-17          65</span></span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAEgCAMAAABb4lATAAAAq1BMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZpA6ZrY6kLY6kNtmAABmADpmAGZmOgBmOjpmOpBmZmZmkLZmkNtmtttmtv+QOgCQOmaQZjqQkLaQttuQ29uQ2/+2ZgC2Zjq2kGa22/+2/7a2///bkDrbkGbbtmbbtpDb27bb2//b/9vb////tmb/25D/27b//7b//9v///+nkR/UAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAM5UlEQVR4nO2da2PbthWG4S6e3aXbOqtbdkm1bjXXbFyT1bQl//9fNoIgJVESLsSFOOf4fT7YiaIAR+cRCBAkQPUKRKNqBwDKAsHCgWDhyBPcKsNvP81f32/V7VNMgef/8fTvLz8odfPXqGJXYongRqm7/tMp9X2xcDIwCVY3j7PXSwjebYaa7mJjXYEFgtv+YzX6w+w2D+UCSuYg+MxntOBzTgrq6/qofxD+xocL3m97rd3QLNo8mSpDq776T//rZWOa8OcPSv1KH0S1l1+2prV12kmrbn78l1LvTEM/vK9vlXef36ubj6//vR/+cRT6+U/6uP94Knj/0zf9n57vZQjebfqP0Q3JMz+JMgrW/h4P7bn3MHgZ/7HRv9rTQ/nxfeNhV6n3+kf/PiO0O7z57FCwb847A1KIbcFfNvp337r6WHt7D8aLaW26kQ5O330y/3b6Pi344fVnNR59x//Y//j10FgfzgR3h2MATWL64EE1WWZ9cHNssZOnu/EIPfadvbO719P39YJNO749F/rlp/d6QDUXrKv7ttJHDUH2KHpyoQ/X5s9D+26GV80xfGjNp+8zzdv8PBG8/0GNI+bz0dpn/SayiD0Pvvn9p0mTabLGiz5G968+vM4En77vumD9xX73jy+bK4Kn5k8TiYKP6b5swfoY3U7jqgUtePjT/M0HIHhVTgVf9MGDw/dHm5PJeR98RXA3dding6yXD/cPw/8iPOgULvh8FD28okyfeSp4Poq+3oJvn1628z64/1NfxM9KRh98OD80Z4dkmQk+Pw8epMxOlMfud3YebOmDLwdZw7flfMqMFgta8H5L2euBuWAzQ/W312N/3E1zxzPBx/c5RtHv/tkej/UDLx8kXWzYbynPqofSET/Ny8yiPrjzpEaBuqQK9kF/xDYMJAgPidKAYC345g+1gygGBAsnh2DnlULugiXGD8EnSIwfgk+QGP+izzRdqDm7wO0cpnOCX/zK8Tf7ay7QgimhnH+1vuZCtGB2QLBszvON82BhQPBCmMV/EW4GwcPNho1tMpdZgi7gFf9ltOmCu5vH9vbJunSFV4IuYRX/lWCTBesbovXd0a1lpMUqQVdgFX8JwXr1ihZsG0qzStAVOMUfKjOqBTeWm5A4JYg5V1Odqw9ubTd2QPBaXM90nlH05Vx0bGEgFkuicR7sgU38EBwHl/htcUKwBybxW8OEYA884rdHmSY4YOkKjwTZYRG/I8jEFuxfusIiQdwpJ9i/dAWCy+PKcXIf7F26sqQwEIMzxRhkeaAfvztCCPZAP34IToJ8/J4AIdgD9fh98UGwB+Lxe8ODYNb4swvBrIFg2QQkF4I9UI4/JDYI9kA4/qDQINgD3fjDIoNgD2TjDwwMgj1QjT80LgjmSXBaIZgnECyb8KxCsAeS8S8ICoI9UIx/SUwQ7IFg/ItCgmAP9OJfFhEEeyAX/8KAIJgZS/MJwbxYnM5SgsXsVUmL5dlEC/ZAKv6IYCDYA6X4Y2KBYA+E4o8KBYI9kIk/cjQDwR6oxB8bBwTzIDqNEMyC+CxCMAcSkgjBHijEnxIDBHuoH3/aZCAEe6gef2IAEOyhdvyp9UOwh7rxp1+rgWDKZEgeBNMly6VWCCZLnsxBsIdq8Weq2CW4G+/JcG9lF1EBJyrFn+1OGKvg3UaNu1Dut7adZGMr4ESV+DPe6GQTvPvjqdP535Ir4ESF+LPex4Y+2MP68eet0SF4/79SFQAHmRPmELzbmE54//f4HhiCl5I7X+5RtH4aUuscYvUjMNeG/hC8iAK3kTv7YGPP9uBYTTv9a2d7G3fB68VfZpGAe5ClDbvOgvWDC0daoc8uXCv+UktAnIIbpT5ulcWcRj96dARPH6VZjXOQNRx2O0cfjBacqZJytbgE/9koc42iDw8dRR+cUEXJOlInOqZHY1mP49wFF6fw+ktMVdal+PJaXGyoyBqrp1MvF4qf6Cg4/Fln/Bb4mgVMdESXW/H8K7xqnCbFlbnizhYewf1RWs9H28BER0SB625bYhfcKPXw/LunU4kXoAUvLGz9TWmsgpteWDO0Xps6jfyJjmxU2nHIeh6s2+3z11qw7eA7gImOIOptJ2UXrFvkcFOHqwXHVfC2qLtZmPUQ3U7t1qjOWgEnEuInsROcfZDVmuGz7wnfr55j+FsUTMLsSI67KiF4eCPN3Rsh2IMtfnXOqlGF477gf+cvoDUf73w65OLDk/ydSu34Q367pGt5ASMsXi14pkc+vkN0iGMegt+U1iP+Plgrdl8PJi74bYqd8F9s6E+T9tv4uY7ap4GpZrl/MVyC9TSkMetso8srWINc7Vaw4N3GdaXwSP89uH1qbB11lQn2jEdkwYID6W4e29sn64Tm6gnK3N2+ecH6krC+HNGSuOCffzAlVfB0GVD5xtD6uqIWTOGOjjc7VHaQrQU3te/oeLtnQk5y9cGt7aLTOlmHXRtOwc/3yn3T3cBwNLe+a4XEF7XL/YvjEmzus7K2zfgKslJhbQ8nHIKnWyZJ37JTZW0PJ5wTHabpOqexqi5dWaPnFSw4pAXXXLpSb20PJ9L64Jo3vnPP/EqkjaLrLV3BaVEgaefBtVow9AaTONFRZenKqnq5f5WcgocpDPdJUoWlKytfvli1tvw4B1lm7VnYVeElFSSVt3LGBQveb83h13YZIb6ChNLWv7y8doWZcU10fGeabsL9OpYKosuqkG3BgqcWTGaqknuuq+Ce6NCGqVxswKlRFM656MCbOhZXULOct0b6Bf+ICuoVw6jiTPAQXPHwDMERFdQog2PdOWAguO7oCoIjKli3ANbVJ0NeMPcE14a6YPhNhLhg+E2FtmACfgmEkARlwSQmJynEkAJhwTRSSyOKeOgKJpJZImFEQ1YwlcRSiSMWqoK555UMRAXDby5ICiYxfBZCKcEpGwaS0ksqmAgItmBaKaUVzXLoCSaWUWLhLIacYGoJpRbPUiDYA7V4lkJNMPd8koOWYJwfZYeUYOjNDyXBJP2SDGoBhATTTCXNqMKhI5hoJomGFQwZwVQTSTWuUKgIJptHsoEFQkQw9zTShYZg+C0GBAuHhGDKfinHFgIFwaRzSDq4AAgIpp1C2tH5qS+YeAaJh+elumDqCaQen49UwY1Sd8Ou77a9ljyFcc8feRIFD09M0g8Kj320HQQXJk3wsF/0uGdp1H7R8FuaNMHDju9mL8u4Hd/pC6YfoZu6LZhB9hiE6CRXH3yyuX94YRySxyFGFzVH0SxyxyJIBzXPg1nkjkWQDioK5p46HtQTDL+rUE0w/K5D6nmwd89wS2Fs/LIJ1EJiC95vfXvBQ3BdUg/R++3d8go4pY1PpNdJ7oM7zzM7rhbGKGuMQr1KlUEWp6RxivUaECycGoLhd0VyCHY+++6yMPhdk/UFM/PLLNwLINgDs3AvSBbcmnks60OGzwvjljBu8Z6zegvmljBu8Z6ztmB2+WIX8BmlBNs2I+WeL3ZUX9kAygLBwskgeLdRt0+N5aZK9oIlxr/sM3U3j+3tU+zSFfJIjH/RZ9I3ROu7o9uolQ30kRj/os+kV69owXFLV+gjMf6oFtzYlq6AuqQKHvvg1nNjR1zZ4RRraBILXj6KdsxFp5UdjEQPxQou2e1AMIGCIVh4wRAsvGAIFl5w1qUr0WUvQ6KHYgVnXboSXzaJckUWnHXpSkLZFMoVWfCiqn1LVwA9uE+/Ag8QLJzFgq17KAGSQLBwIFg4ECwcCBYORtHCgWDhQLBwIFg4ECycQoKff3O4stiF36Xn47Qoc3l62eWtgGJzhlsqXk1wgssI3m0Ol471QwC6PCmbFfX8dTYNp8VmDLdUvJrwBBcR3B3v+TCnzU2Ob+68KOdK9OhiM4ZbKt6hsPAElxDcqYfDx3m+15eQbYuZFjEvqs11tJsVmzHcUvG+LktwoT74WP9wZMry9Z0X1XzTd2k5JtVmxWYMt1S8huAElxZseocsvdqsqN1Gr4+yrlSOLTZjuKXiHQsPTTBXwWfV5Cq2mODxpWwdMRnBxQ7R5qX79JvEVjpEm5cyxGuodIhup34m8yBrKPdKUTnOPVYaZJmX8p3bURlklTpNMp8rR1Nb5zQpX7yG4ASXFlxsomP4SFkGLetMdOSL15RddaJjrN/cKN/mm/sbizLlNsr+jL2EYjOGWypeTXCCcbFBOBAsHAgWDgQLB4KFA8HCgWDhQLBwIFg4ECwcCBYOBAsHgoUDwcKBYOFAsHAgWDgQLBwIFg4ECweChQPBwoFg4UCwcCBYOBAsHAgWDgQLB4KFA8HCgeARvUZ+t5G3FzYEj0xPN5cGBE90X/37u5y7DRIBgg80+bYKJQQEH5D54D4Inthv/5Jzv1AqQPBEe/uLxAfKQPDIbvN93i1/iQDBI01/irT0AckcgGDhQLBwIFg4/weGRzBYF527dgAAAABJRU5ErkJggg==" style="display: block; margin: auto;" /></p>
 </div>
 <div id="staircase-discontinuous-fx-lceil-10-x---1-rceil-12" class="section level4">
-<h4>Staircase (discontinuous): <span class="math inline">\(f(x) = \lceil 10 x - 1 \rceil + 1/2\)</span></h4>
-<p>This function has discontinuities, including one at the location of the root.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Staircase</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>staircase <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ceiling</span>(<span class="dv">10</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(staircase, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: staircase </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7.404e-11         0.5          31</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(staircase, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -3.739e-11        -0.5          31</span></span></code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<h4>Staircase (discontinuous): <span class="math inline">\(f(x) = \lceil
+10 x - 1 \rceil + 1/2\)</span></h4>
+<p>This function has discontinuities, including one at the location of
+the root.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Staircase</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>staircase <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ceiling</span>(<span class="dv">10</span> <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">itp</span>(staircase, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt; function: staircase </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt;  7.404e-11         0.5          31</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="fu">uniroot</span>(staircase, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; -3.739e-11        -0.5          31</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 </div>
 <div id="warsaw-multiple-roots-fx-ix--1left1-sinleftfrac11xrightright-1" class="section level4">
-<h4>Warsaw (multiple roots): <span class="math inline">\(f(x) = I(x &gt; -1)\left(1 + \sin\left(\frac{1}{1+x}\right)\right)-1\)</span></h4>
+<h4>Warsaw (multiple roots): <span class="math inline">\(f(x) = I(x &gt;
+-1)\left(1 + \sin\left(\frac{1}{1+x}\right)\right)-1\)</span></h4>
 <p>This function has multiple roots: we find two of them.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Warsaw</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>warsaw <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">1</span>, <span class="fu">sin</span>(<span class="dv">1</span> <span class="sc">/</span> (x <span class="sc">+</span> <span class="dv">1</span>)), <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Function increasing over the interval</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: warsaw </span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -0.6817  -5.472e-11          11</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -0.6817  -3.216e-16           9</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Function decreasing over the interval</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">itp</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.85</span>, <span class="sc">-</span><span class="fl">0.8</span>))</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: warsaw </span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -0.8408   6.494e-11           8</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">uniroot</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.85</span>, <span class="sc">-</span><span class="fl">0.8</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    -0.8408  -3.021e-12           6</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Warsaw</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>warsaw <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">1</span>, <span class="fu">sin</span>(<span class="dv">1</span> <span class="sc">/</span> (x <span class="sc">+</span> <span class="dv">1</span>)), <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co"># Function increasing over the interval</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu">itp</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; function: warsaw </span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;    -0.6817  -5.472e-11          11</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="fu">uniroot</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;    -0.6817  -3.216e-16           9</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co"># Function decreasing over the interval</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="fu">itp</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.85</span>, <span class="sc">-</span><span class="fl">0.8</span>))</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; function: warsaw </span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;    -0.8408   6.494e-11           8</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="fu">uniroot</span>(warsaw, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.85</span>, <span class="sc">-</span><span class="fl">0.8</span>), <span class="at">tol =</span> <span class="fl">1e-10</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;    -0.8408  -3.021e-12           6</span></span></code></pre></div>
 <pre><code>#&gt; Warning in sin(1/(x + 1)): NaNs produced</code></pre>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
-<p>In terms of a naive comparison based on the number of iterations <code>itp</code> and <code>uniroot</code> perform similarly, except in the repeated-root “Polynomial 3” example, where <code>itp</code> requires fewer iterations.</p>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p>In terms of a naive comparison based on the number of iterations
+<code>itp</code> and <code>uniroot</code> perform similarly, except in
+the repeated-root “Polynomial 3” example, where <code>itp</code>
+requires fewer iterations.</p>
 </div>
 </div>
 </div>
 <div id="supplying-to-itp-an-external-pointer-to-a-c-function" class="section level2">
-<h2>Supplying to <code>itp</code> an external pointer to a C++ function</h2>
-<p>The general approach follows the article <a href="https://gallery.rcpp.org/articles/passing-cpp-function-pointers/">Passing user-supplied C++ functions</a> in the <a href="https://gallery.rcpp.org/">Rcpp Gallery</a>. The user writes a C++ function to calculate <span class="math inline">\(f\)</span>. This function must have a particular structure. As an example consider the following function, which implements the Lambert function considered above.</p>
+<h2>Supplying to <code>itp</code> an external pointer to a C++
+function</h2>
+<p>The general approach follows the article <a href="https://gallery.rcpp.org/articles/passing-cpp-function-pointers/">Passing
+user-supplied C++ functions</a> in the <a href="https://gallery.rcpp.org/">Rcpp Gallery</a>. The user writes a C++
+function to calculate <span class="math inline">\(f\)</span>. This
+function must have a particular structure. As an example consider the
+following function, which implements the Lambert function considered
+above.</p>
 <pre><code>double lambert_cpp(const double&amp; x, const List&amp; pars) {
   return x * exp(x) - 1.0 ;
 }</code></pre>
-<p>The function returns a value of double type and has two arguments: the first is the main argument and is of double type and the second is a list containing the values of additional parameters whose values are not specified inside the function. This list must be present, even if an empty list will be passed to the function. This allows the user to change the values of any parameters in <span class="math inline">\(f\)</span> without editing the function.</p>
-<p>One way to provide C++ functions is to create them in a file, say <code>user_fns.cpp</code>. Example content is provided below.</p>
+<p>The function returns a value of double type and has two arguments:
+the first is the main argument and is of double type and the second is a
+list containing the values of additional parameters whose values are not
+specified inside the function. This list must be present, even if an
+empty list will be passed to the function. This allows the user to
+change the values of any parameters in <span class="math inline">\(f\)</span> without editing the function.</p>
+<p>One way to provide C++ functions is to create them in a file, say
+<code>user_fns.cpp</code>. Example content is provided below.</p>
 <pre><code>#include &lt;Rcpp.h&gt;
 using namespace Rcpp;
 
@@ -314,39 +562,59 @@ SEXP xptr_create(std::string fstr) {
   else
     return(XPtr&lt;funcPtr&gt;(R_NilValue)) ;
 }</code></pre>
-<p>The full file is available on the <a href="https://raw.githubusercontent.com/paulnorthrop/itp/main/src/user_fns.cpp">itp Github page</a>. The functions in this file are compiled and made available to R, either using the <code>Rcpp::sourceCpp</code> function (e.g. <code>Rcpp::sourceCpp(&quot;user_fns.cpp&quot;)</code>) or using RStudio’s Source button on the editor toolbar. The example content below also includes the function <code>xptr_create</code>, which creates an external pointer to a C++ function. It is this external pointer that is passed to <code>itp</code>. If the user has written a C++ function, say <code>new_name</code>, then they need to add to <code>xptr_create</code> (or their own version of this function) two lines of code:</p>
+<p>The full file is available on the <a href="https://raw.githubusercontent.com/paulnorthrop/itp/main/src/user_fns.cpp">itp
+Github page</a>. The functions in this file are compiled and made
+available to R, either using the <code>Rcpp::sourceCpp</code> function
+(e.g. <code>Rcpp::sourceCpp(&quot;user_fns.cpp&quot;)</code>) or using RStudio’s
+Source button on the editor toolbar. The example content below also
+includes the function <code>xptr_create</code>, which creates an
+external pointer to a C++ function. It is this external pointer that is
+passed to <code>itp</code>. If the user has written a C++ function, say
+<code>new_name</code>, then they need to add to <code>xptr_create</code>
+(or their own version of this function) two lines of code:</p>
 <pre><code>else if (fstr == &quot;new_name&quot;)  
   return(Rcpp::XPtr&lt;funcPtr&gt;(new funcPtr(&amp;new_name))) ;</code></pre>
-<p>to create an external pointer for <code>new_name</code> using <code>create_xptr</code>.</p>
+<p>to create an external pointer for <code>new_name</code> using
+<code>create_xptr</code>.</p>
 <div id="lambert-fx-x-ex---1-1" class="section level3">
 <h3>Lambert: <span class="math inline">\(f(x) = x e^x - 1\)</span></h3>
-<p>We repeat the Lambert example, obtaining the same results as above when we used an R function to supply the function.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lambert, using an external pointer to a C++ function</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lambert_ptr <span class="ot">&lt;-</span> <span class="fu">xptr_create</span>(<span class="st">&quot;lambert&quot;</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">itp</span>(lambert_ptr, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>res</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function: lambert_ptr </span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span></code></pre></div>
+<p>We repeat the Lambert example, obtaining the same results as above
+when we used an R function to supply the function.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Lambert, using an external pointer to a C++ function</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>lambert_ptr <span class="ot">&lt;-</span> <span class="fu">xptr_create</span>(<span class="st">&quot;lambert&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">itp</span>(lambert_ptr, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>res</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt; function: lambert_ptr </span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span></code></pre></div>
 </div>
 </div>
 <div id="c-function-itp_c" class="section level2">
 <h2>C++ function <code>itp_c</code></h2>
-<p>Also provided is the function <code>itp_c</code>, which is equivalent to <code>itp</code>, but the calculations are performed entirely using C++, and the arguments differ slightly: <code>itp_c</code> has a named required argument <code>pars</code> rather than <code>...</code> and it does not have the arguments <code>interval</code>, <code>f.a</code> or <code>f.b</code>. This may be useful if you wish to call an ITP function on the C++ side.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calling itp_c()</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">itp_c</span>(lambert_ptr, <span class="at">pars =</span> <span class="fu">list</span>(), <span class="at">a =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">b =</span> <span class="dv">1</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>res</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function:  </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span></code></pre></div>
+<p>Also provided is the function <code>itp_c</code>, which is equivalent
+to <code>itp</code>, but the calculations are performed entirely using
+C++, and the arguments differ slightly: <code>itp_c</code> has a named
+required argument <code>pars</code> rather than <code>...</code> and it
+does not have the arguments <code>interval</code>, <code>f.a</code> or
+<code>f.b</code>. This may be useful if you wish to call an ITP function
+on the C++ side.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Calling itp_c()</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">itp_c</span>(lambert_ptr, <span class="at">pars =</span> <span class="fu">list</span>(), <span class="at">a =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">b =</span> <span class="dv">1</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>res</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; function:  </span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt;       root     f(root)  iterations  </span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt;     0.5671   2.048e-12           8</span></span></code></pre></div>
 </div>
 <div id="plot-method" class="section level2">
 <h2>Plot method</h2>
-<p>Objects of class <code>itp</code> have a plot method that, by default, produces a plot of the function over the interval over which the root was sought and indicates the location of the root using dashed lines.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">main =</span> <span class="st">&quot;Lambert&quot;</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<p>Objects of class <code>itp</code> have a plot method that, by
+default, produces a plot of the function over the interval over which
+the root was sought and indicates the location of the root using dashed
+lines.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>oldpar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">plot</span>(res, <span class="at">main =</span> <span class="st">&quot;Lambert&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">par</span>(oldpar)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
@@ -355,7 +623,10 @@ SEXP xptr_create(std::string fstr) {
 </script>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-OliveiraTakahashi2021" class="csl-entry">
-Oliveira, I. F. D., and R. H. C. Takahashi. 2020. <span>“An Enhancement of the Bisection Method Average Performance Preserving Minmax Optimality.”</span> <em>ACM Trans. Math. Softw.</em> 47 (1). New York, NY, USA: Association for Computing Machinery. doi:<a href="https://doi.org/10.1145/3423597">10.1145/3423597</a>.
+Oliveira, I. F. D., and R. H. C. Takahashi. 2020. <span>“An Enhancement
+of the Bisection Method Average Performance Preserving Minmax
+Optimality.”</span> <em>ACM Trans. Math. Softw.</em> 47 (1). New York,
+NY, USA: Association for Computing Machinery. doi:<a href="https://doi.org/10.1145/3423597">10.1145/3423597</a>.
 </div>
 </div>
 </div>
